@@ -7,11 +7,17 @@ from django.db import models
 class Category(models.Model):
     name = models.CharField(max_length=255)
 
+    class Meta:
+        verbose_name = 'Category'
+        verbose_name_plural = 'Categories'
+        ordering = ['id']
+ 
     def __str__(self) -> str:
         return self.name
 
 class Quiz(models.Model):
     title = models.CharField(max_length=255)
+    is_active = models.BooleanField(default=True,  verbose_name='Active Status')
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     date = models.DateTimeField(auto_now_add= True)
 
@@ -19,6 +25,8 @@ class Quiz(models.Model):
         verbose_name = 'Quiz'
         verbose_name_plural =  'Quizzes'
         ordering = ['id']
+    def __str__(self) -> str:
+        return self.title
 
 
 class UpdateModel(models.Model):
@@ -44,7 +52,6 @@ class Question(UpdateModel):
     quiz = models.ForeignKey(Quiz, related_name='question',  on_delete=models.CASCADE)
     type = models.IntegerField(default=0, choices=TYPE, verbose_name = 'Question Type')
     difficulty_level = models.IntegerField(default=0, choices=DIFF_SCALE,  verbose_name=  'Difficulty Level')
-    is_active = models.BooleanField(default=True,  verbose_name='Active Status')
     date_created =  models.DateTimeField(auto_now_add=True, verbose_name="Creation Date")
     title = models.CharField(max_length=255, verbose_name =  'Title')
 
@@ -68,4 +75,4 @@ class Answer(UpdateModel):
     is_right = models.BooleanField(default= False)
 
     def __str__(self) -> str:
-        return super().ans_text
+        return self.ans_text
