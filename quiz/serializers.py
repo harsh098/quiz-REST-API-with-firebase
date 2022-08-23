@@ -20,22 +20,22 @@ class AnswerSerializer(serializers.ModelSerializer):
 
 class QuestionSerializer(serializers.ModelSerializer):
     #Serialize Question w/ Quiz Data
-    answers = AnswerSerializer(many=True, read_only=True)
+    answer = AnswerSerializer(many=True, read_only=True)
     quiz = QuizSerializer(read_only=True)
     class Meta:
         model = Question
         fields = [
             'quiz',
             'title', 
-            'answers',
+            'answer',
         ]
 
 class RandomQuestionSerializer(serializers.ModelSerializer):
     #to serialize fetched questions reagardless of quiz
-    answers =  AnswerSerializer(many=True, read_only=True)
+    answer =  AnswerSerializer(many=True, read_only=True)
     class Meta:
         model = Question
         fields =[
             'title',
-            'answers',
+            'answer',
         ]
