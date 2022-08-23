@@ -20,5 +20,5 @@ class GetQuizQuestion(APIView):
 
     def get(self, request, format=None, **kwargs):
         quiz_questions=Question.objects.filter(quiz__title=kwargs['topic'])
-        serializer = QuestionSerializer(quiz_questions, amny=True)
+        serializer = QuestionSerializer(quiz_questions, many=True)
         return Response(serializer.data)
